@@ -1,8 +1,6 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
-const createShortURL = require('./routes/createShortURL');
-const getShortURL = require('./routes/getShortURL');
 const app = express();
 
 // Basic Configuration
@@ -15,8 +13,9 @@ app.get('/', (req, res) => {
   res.sendFile(process.cwd() + '/views/index.html');
 });
 
-app.use('/api/shortUrl', createShortURL);
-app.use('/api/shortUrl', getShortURL)
+app.use('/', require('./routes/createShortURL'));
+app.use('/', require('./routes/getShortURL'))
+app.use('/user', require('./routes/user/createUser'));
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

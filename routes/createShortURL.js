@@ -6,7 +6,7 @@ const bodyParser = require('body-parser');
 const router = express.Router();
 const urlEncodedParser = bodyParser.urlencoded({ extended: false });
 
-router.post('/', urlEncodedParser, (req, res) => {
+router.post('/createUrl', urlEncodedParser, (req, res) => {
   let shortUri = md5(req.body.url).substring(0,7);
   let query = "INSERT INTO url (url, shorturl) VALUES (?,?)"
   db.run(query, [req.body.url, shortUri], (err) => {

@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
 app.use('/', require('./routes/createShortURL'));
 app.use('/', require('./routes/getShortURL'))
 app.use('/user', require('./routes/user/createUser'));
+app.use('/user', require('./routes/user/authUser'));
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

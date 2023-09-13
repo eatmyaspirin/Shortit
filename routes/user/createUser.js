@@ -3,6 +3,7 @@ const db = require('../../utils/database');
 const md5 = require('md5')
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const urlEncodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -23,8 +24,17 @@ router.post('/createUser', urlEncodedParser, (req, res) => {
                     })
                 }
             } else {
+                const token = jwt.sign(
+                    {username, userId}, process.env.JWTSECRET, { expiresIn: process.env.MAXAGE }
+                )
+                res.cookie("jwt", token, {
+                    httpOnly: true,
+                    maxAge: process.env.MAXAGE * 1000,
+                  });
                 res.json({
                     message: 'User registered successfully',
+                    userId,
+                    username
                 })
             }
         })

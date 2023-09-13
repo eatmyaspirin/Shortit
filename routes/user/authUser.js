@@ -2,6 +2,7 @@ const express = require('express');
 const db = require('../../utils/database');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 const router = express.Router();
 const urlEncodedParser = bodyParser.urlencoded({ extended: false });
 
@@ -13,11 +14,30 @@ router.post('/authUser', urlEncodedParser, (req, res) => {
             if (err) {
                 console.error('Transaction Error: ', err);
             } else {
+                if (row) {
                     bcrypt.compare(password, row.password, (err, result) => {
-                        res.json({
-                            message: 'Successfully authenticated'
-                        })
-                })
+                        if (result) {
+                            const token = jwt.sign(
+                                { username, userId: row.userId }, process.env.JWTSECRET, { expiresIn: process.env.MAXAGE }
+                            );
+                            res.cookie("jwt", token, {
+                                httpOnly: true,
+                                maxAge: process.env.MAXAGE * 1000,
+                            }).json({
+                                message: 'Successfully authenticated',
+                                userId: row.userId,
+                            })
+                        } else {
+                            res.status(400).json({
+                                message: 'Authentication failed'
+                            })
+                        }
+                    })
+                } else {
+                    res.json({
+                        message: 'User not found'
+                    })
+                }
             }
         })
     } catch (err) {

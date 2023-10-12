@@ -1,6 +1,6 @@
 const sqlite = require('sqlite3');
 
-const db = new sqlite.Database('./db/db', (err) => {
+const db = new sqlite.Database('./db', (err) => {
     if (err) {
         console.error(err.message)
         throw err

@@ -1,12 +1,12 @@
 const express = require('express');
-const db = require('../../utils/database');
+const db = require('../utils/database');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
 const urlEncodedParser = bodyParser.urlencoded({ extended: false });
 
-router.post('/authUser', urlEncodedParser, (req, res) => {
+router.post('/login', urlEncodedParser, (req, res) => {
     let { username, password } = req.body;
     try {
         let query = `SELECT * FROM user WHERE username = ?`;
@@ -18,7 +18,7 @@ router.post('/authUser', urlEncodedParser, (req, res) => {
                     bcrypt.compare(password, row.password, (err, result) => {
                         if (result) {
                             const token = jwt.sign(
-                                { username, userId: row.userId }, process.env.JWTSECRET, { expiresIn: process.env.MAXAGE }
+                                { username, userId: row.userId, isAdmin }, process.env.JWTSECRET, { expiresIn: process.env.MAXAGE }
                             );
                             res.cookie("jwt", token, {
                                 httpOnly: true,

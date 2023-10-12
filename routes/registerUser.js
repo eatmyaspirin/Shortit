@@ -1,5 +1,5 @@
 const express = require('express');
-const db = require('../../utils/database');
+const db = require('../utils/database');
 const md5 = require('md5')
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const urlEncodedParser = bodyParser.urlencoded({ extended: false });
 
-router.post('/createUser', urlEncodedParser, (req, res) => {
+router.post('/register', urlEncodedParser, (req, res) => {
     let { username, password } = req.body;
     let userId = md5(username).substring(0,10);
     if (password.length < 8) res.json({message: 'Password should be more than 8 characters'});

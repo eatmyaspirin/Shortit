@@ -1,5 +1,5 @@
 const express = require('express');
-const db = require('../utils/database');
+const db = require('../../utils/database');
 const md5 = require('md5')
 const bodyParser = require('body-parser');
 

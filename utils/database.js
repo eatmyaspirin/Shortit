@@ -11,6 +11,7 @@ const db = new sqlite.Database('./db', (err) => {
             userId text PRIMARY KEY,
             username text UNIQUE, 
             password text, 
+            isAdmin boolean DEFAULT false,
             CONSTRAINT username_unique UNIQUE (username)
             );
             CREATE TABLE url (
@@ -25,6 +26,7 @@ const db = new sqlite.Database('./db', (err) => {
                 urlId text,
                 userId text, 
                 visitors text,
+                created datetime DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (urlId) REFERENCES url(urlId),
                 FOREIGN KEY (userId) REFERENCES user(userId)
             );            

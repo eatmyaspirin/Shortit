@@ -1,5 +1,5 @@
 const express = require('express');
-const db = require('../utils/database');
+const db = require('../../utils/database');
 const router = express.Router();
 
 router.get('/:shortUri', (req, res) => {

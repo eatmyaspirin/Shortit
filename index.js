@@ -15,19 +15,19 @@ app.get('/', (req, res) => {
   res.sendFile(process.cwd() + '/views/index.html');
 });
 
-app.use('/', isLoggedIn, require('./routes/url/createShortURL'));
 app.use('/', require('./routes/url/getShortURL'))
-app.use('/', require('./routes/registerUser'));
-app.use('/', require('./routes/loginUser'));
+app.use('/login', require('./routes/loginUser'));
+app.use('/register', require('./routes/registerUser'));
+app.use('/createUrl', isLoggedIn, require('./routes/url/createShortURL'));
 app.use('/user', isLoggedIn, require('./routes/user.js'));
 app.use('/admin', isAdmin, require('./routes/admin.js'));
-
-app.use('/logout', (res) => {
-  res.clearCookie('jwt');
+app.use('/logout', (req, res) => {
+  res.clearCookie("jwt");
   res.status(200).json({
     message: 'Logged out successfully'
   })
 });
+
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);

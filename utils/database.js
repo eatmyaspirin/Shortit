@@ -1,13 +1,14 @@
 const sqlite = require('sqlite3');
 
-const db = new sqlite.Database('./db', (err) => {
+const db = new sqlite.Database('./db.sqlite', (err) => {
     if (err) {
         console.error(err.message)
         throw err
     } else {
         console.log('Connected to the SQLite database, configuring tables')
         db.exec(
-            `CREATE TABLE user (
+            `
+            CREATE TABLE user (
             userId text PRIMARY KEY,
             username text UNIQUE, 
             password text, 
@@ -35,7 +36,7 @@ const db = new sqlite.Database('./db', (err) => {
                 if (err) {
                     const { errno } = err;
                     if (errno === 1) {
-                        console.error(err.message, 'configuration not needed, skipping');
+                        console.error('Configuration not needed, skipping');
                     } else {
                         console.log(err);
                     }

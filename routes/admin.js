@@ -21,7 +21,7 @@ router.get('/getAllUsers', (req, res) => {
 });
 
 router.get('/getAllURLs', (req, res) => {
-    let query = `SELECT * FROM url`;
+    let query = `SELECT url, urlId, shortUrl, username FROM url JOIN user ON url.userId = user.userId`;
     db.all(query, (err, rows) => {
         if (err) {
             console.error('Transaction Error: ', err);

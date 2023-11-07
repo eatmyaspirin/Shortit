@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const router = express.Router();
 const urlEncodedParser = bodyParser.urlencoded({ extended: false });
 
-router.post('/login', urlEncodedParser, (req, res) => {
+router.post('/', urlEncodedParser, (req, res) => {
     let { username, password } = req.body;
     try {
         let query = `SELECT * FROM user WHERE username = ?`;
@@ -18,7 +18,7 @@ router.post('/login', urlEncodedParser, (req, res) => {
                     bcrypt.compare(password, row.password, (err, result) => {
                         if (result) {
                             const token = jwt.sign(
-                                { username, userId: row.userId, isAdmin }, process.env.JWTSECRET, { expiresIn: process.env.MAXAGE }
+                                { username, userId: row.userId, isAdmin: row.isAdmin }, process.env.JWTSECRET, { expiresIn: process.env.MAXAGE*1000 }
                             );
                             res.cookie("jwt", token, {
                                 httpOnly: true,

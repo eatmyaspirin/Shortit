@@ -4,9 +4,10 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const router = express.Router();
-const urlEncodedParser = bodyParser.urlencoded({ extended: false });
+const jsonParser = bodyParser.json()
 
-router.post('/', urlEncodedParser, (req, res) => {
+router.post('/', jsonParser, (req, res) => {
+    console.log(req.body)
     let { username, password } = req.body;
     try {
         let query = `SELECT * FROM user WHERE username = ?`;

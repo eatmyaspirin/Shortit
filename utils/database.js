@@ -20,7 +20,9 @@ const db = new sqlite.Database('./db.sqlite', (err) => {
                 url text, 
                 shortUrl text UNIQUE,
                 userId text,
-                CONSTRAINT shorturl_unique UNIQUE (shorturl),
+                pasteData text,
+                isUrl boolean DEFAULT true,
+                CONSTRAINT shorturl_unique UNIQUE (shortUrl),
                 FOREIGN KEY (userId) REFERENCES user(userId)
             );
             CREATE TABLE stats (

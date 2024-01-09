@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 app.use('/', require('./routes/url/getShortURL'))
 app.use('/login', require('./routes/loginUser'));
 app.use('/register', require('./routes/registerUser'));
-app.use('/createUrl', isLoggedIn, require('./routes/url/createShortURL'));
+app.use('/create', isLoggedIn, require('./routes/url/createShortURL'));
 app.use('/user', isLoggedIn, require('./routes/user.js'));
 app.use('/admin',[isLoggedIn, isAdmin], require('./routes/admin.js'));
 app.use('/logout', (req, res) => {

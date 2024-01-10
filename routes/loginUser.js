@@ -24,6 +24,8 @@ router.post('/', jsonParser, (req, res) => {
                             res.cookie("jwt", token, {
                                 httpOnly: true,
                                 maxAge: process.env.MAXAGE * 1000,
+                                sameSite: 'strict',
+                                secure: true,
                             }).json({
                                 message: 'Successfully authenticated',
                                 userId: row.userId,

@@ -15,6 +15,7 @@ const db = new sqlite.Database('./db.sqlite', (err) => {
             isAdmin boolean DEFAULT false,
             CONSTRAINT username_unique UNIQUE (username)
             );
+            INSERT INTO user (userId, username, password) VALUES ('0000nouser', '', '');
             CREATE TABLE url (
                 urlId text PRIMARY KEY,
                 url text, 

@@ -8,6 +8,8 @@ const port = process.env.PORT || 3000;
 
 const allowedOrigins = ['http://localhost:5173'];
 
+const unSecure = ['/create'];
+
 app.use(function(req, res, next) {  
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
@@ -27,7 +29,7 @@ app.get('/', (req, res) => {
 app.use('/', require('./routes/url/getShortURL'))
 app.use('/login', require('./routes/loginUser'));
 app.use('/register', require('./routes/registerUser'));
-app.use('/create', require('./routes/url/createShortURL'));
+app.use('/create',isLoggedIn, require('./routes/url/createShortURL'));
 app.use('/user', isLoggedIn, require('./routes/user.js'));
 app.use('/admin',[isLoggedIn, isAdmin], require('./routes/admin.js'));
 app.use('/logout', (req, res) => {
@@ -41,3 +43,6 @@ app.use('/logout', (req, res) => {
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
+
+
+module.exports.unSecure = unSecure;

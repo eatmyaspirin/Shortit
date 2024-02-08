@@ -25,9 +25,13 @@ router.post("/", jsonParser, (req, res) => {
             });
           }
         } else {
-          const token = jwt.sign({ username, userId , isAdmin: false}, process.env.JWTSECRET, {
-            expiresIn: process.env.MAXAGE,
-          });
+          const token = jwt.sign(
+            { username, userId, isAdmin: false },
+            process.env.JWTSECRET,
+            {
+              expiresIn: process.env.MAXAGE*1000,
+            }
+          );
           res.cookie("jwt", token, {
             httpOnly: true,
             maxAge: process.env.MAXAGE * 1000,

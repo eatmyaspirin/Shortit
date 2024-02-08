@@ -23,6 +23,7 @@ const db = new sqlite.Database('./db.sqlite', (err) => {
                 userId text,
                 pasteData text,
                 isUrl boolean DEFAULT true,
+                createdDate text,
                 CONSTRAINT shorturl_unique UNIQUE (shortUrl),
                 FOREIGN KEY (userId) REFERENCES user(userId)
             );

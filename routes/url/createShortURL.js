@@ -18,9 +18,10 @@ router.post('/', jsonParser, (req, res) => {
   while(shortUri.length < 10) {
     shortUri += alphabet[Math.floor(Math.random() * alphabet.length)];
   }
-  console.log(urlId, url, shortUri, req.decodedToken, pasteData, req.body.isUrl)
-  let query = "INSERT INTO url (urlId, url, shortUrl, userId, pasteData, isUrl) VALUES (?,?,?,?,?,?)"
-  db.run(query, [urlId, url, shortUri, req.decodedToken ? req.decodedToken.userId : '0000nouser', req.body.pasteData, req.body.isUrl], (err) => {
+  const createdDate = new Date().toISOString();
+  console.log(urlId, url, shortUri, req.decodedToken, pasteData, req.body.isUrl, createdDate)
+  let query = "INSERT INTO url (urlId, url, shortUrl, userId, pasteData, isUrl, createdDate) VALUES (?,?,?,?,?,?, ?)"
+  db.run(query, [urlId, url, shortUri, req.decodedToken ? req.decodedToken.userId : '0000nouser', req.body.pasteData, req.body.isUrl, createdDate], (err) => {
     if(err) {
       console.error('DB Transaction Error');
       res.json({

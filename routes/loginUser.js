@@ -27,7 +27,7 @@ router.post("/", jsonParser, (req, res) => {
                 .cookie("jwt", token, {
                   httpOnly: true,
                   maxAge: process.env.MAXAGE * 1000,
-                  sameSite: "strict",
+                  sameSite: "lax",
                   secure: true,
                 })
                 .json({

@@ -1,5 +1,6 @@
 const express = require('express');
 const db = require('../utils/database');
+const bodyParser = require('body-parser');
 const router = express.Router();
 
 router.get('/getMyUrls', (req, res) => {
@@ -41,7 +42,7 @@ router.get('/stats/:id', (req, res) => {
 });
 
 
-router.post('/delete', (req, res) => {
+router.post('/delete', bodyParser.json(), (req, res) => {
     const { urlId } = req.body;
     const { userId } = req.decodedToken;
     let query = `DELETE FROM url WHERE urlId = ? AND userId = ?`;

@@ -29,9 +29,9 @@ const db = new sqlite.Database('./db.sqlite', (err) => {
             );
             CREATE TABLE stats (
                 urlId text,
-                userId text, 
-                visitors text,
-                created datetime DEFAULT CURRENT_TIMESTAMP,
+                userId text,
+                region text,
+                visitedDate datetime DEFAULT CURRENT_TIMESTAMP,
                 FOREIGN KEY (urlId) REFERENCES url(urlId),
                 FOREIGN KEY (userId) REFERENCES user(userId)
             );            

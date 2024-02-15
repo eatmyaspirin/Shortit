@@ -10,8 +10,8 @@ const allowedOrigins = ["http://localhost:5173"];
 
 const unSecure = ["/create"];
 
-app.use(function (req, res, next) {
-  console.log(req.body);  
+app.use(cookieParser());
+app.use((req, res, next) => {
   const origin = req.headers.origin;
   if (allowedOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
@@ -23,12 +23,6 @@ app.use(function (req, res, next) {
   );
   res.header("Access-Control-Allow-Methods", "DELETE, POST, GET, OPTIONS");
   next();
-});
-app.use(cookieParser());
-app.use("/public", express.static(`${process.cwd()}/public`));
-
-app.get("/", (req, res) => {
-  res.sendFile(process.cwd() + "/views/index.html");
 });
 
 app.use("/", require("./routes/url/getShortURL"));

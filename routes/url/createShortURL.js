@@ -28,12 +28,14 @@ router.post('/', jsonParser, (req, res) => {
         "message": "failed",
         "reason": err,
     })
+    return;
     } else {
       console.log('Added new URL/Paste');
       res.json({
         "message": "success",
         shortUri
     })
+    return;
     }
   })
 })

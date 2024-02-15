@@ -6,10 +6,10 @@ const { isLoggedIn, isAdmin } = require("./middleware/auth");
 
 const port = process.env.PORT || 3000;
 
-const allowedOrigins = ["http://localhost:5173"];
+const allowedOrigins = ["http://localhost:5173", "https://shortit-front.vercel.app/"];
 
 const unSecure = ["/create"];
-
+console.log(process.env.JWT_SECRET, `${process.env.JWT_SECRET}`)
 app.use(cookieParser());
 app.use((req, res, next) => {
   const origin = req.headers.origin;

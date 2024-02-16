@@ -30,14 +30,14 @@ app.use((req, res, next) => {
   
   
 app.use("/test", (req, res)=>res.send("test"));
-app.use("/api", require("./routes/url/getShortURL"));
+app.use("/", require("./routes/url/getShortURL"));
 
-app.use("/api/login", require("./routes/loginUser"));
-app.use("/api/register", require("./routes/registerUser"));
-app.use("/api/create", isLoggedIn, require("./routes/url/createShortURL"));
-app.use("/api/user", isLoggedIn, require("./routes/user.js"));
-app.use("/api/admin", [isLoggedIn, isAdmin], require("./routes/admin.js"));
-app.use("/api/logout", (req, res) => {
+app.use("/login", require("./routes/loginUser"));
+app.use("/register", require("./routes/registerUser"));
+app.use("/create", isLoggedIn, require("./routes/url/createShortURL"));
+app.use("/user", isLoggedIn, require("./routes/user.js"));
+app.use("/admin", [isLoggedIn, isAdmin], require("./routes/admin.js"));
+app.use("/logout", (req, res) => {
   res.clearCookie("jwt");
   res.status(200).json({
     message: "Logged out successfully",

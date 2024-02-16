@@ -20,7 +20,7 @@ router.post("/", jsonParser, (req, res) => {
             if (result) {
               const token = jwt.sign(
                 { username, userId: row.userId, isAdmin: row.isAdmin },
-                process.env.JWTSECRET,
+                `${process.env.JWTSECRET}`,
                 { expiresIn: process.env.MAXAGE * 1000 }
               );
               res
